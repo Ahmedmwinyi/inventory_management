@@ -1,7 +1,15 @@
+import Header from '@/components/dashboard/header'
+import Sidebar from '@/components/dashboard/Sidebar'
 import React from 'react'
 
 export default function Layout({children}) {
   return (
-    <div className='bg-gray-300 '>{children}</div>
+    <div className='flex'>
+      <Sidebar />
+      <main className='w-full bg-slate-100'>
+        <Header />
+        {children}
+        </main>
+    </div>
   )
 }
