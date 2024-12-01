@@ -46,7 +46,7 @@ export default function HomeNavBar() {
                 href={item.href}
                 className={`${
                   pathname === item.href
-                    ? "py-1.5 border-b-2 border-blue-600"
+                    ? "py-1 border-b-2 border-blue-600"
                     : "py-1.5"
                 }`}
               >

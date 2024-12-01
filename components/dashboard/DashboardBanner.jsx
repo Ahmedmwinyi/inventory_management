@@ -22,12 +22,12 @@ export default function DashboardBanner() {
       </div>
       {/* Button */}
       <div className="col-span-3">
-        <button className="py-2.5 px-8 uppercase bg-blue-700 text-white rounded-lg">
+        <button className="py-2 px-8 uppercase bg-blue-700 text-white text-sm rounded-lg">
           Enable
         </button>
       </div>
       {/* Close Button */}
-      <button onClick={() => setHidden("")} className="absolute top-4 right-16">
+      <button onClick={() => setHidden(true)} className="absolute top-4 right-16">
         <X />
       </button>
     </div>
