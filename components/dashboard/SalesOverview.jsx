@@ -1,5 +1,3 @@
-import { CheckCircle, CheckCircle2 } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import SalesActivityCard from "./SalesActivityCard";
 import InventorySummaryCard from "./InventorySummaryCard";
@@ -32,7 +30,7 @@ export default function SalesOverview() {
       number: 5,
       unit: "Qty",
       href: "#",
-      color: "text-orange-600",
+      color: "text-yellow-300",
     },
   ];
 

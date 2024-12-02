@@ -1,11 +1,17 @@
-"use client"
+"use client";
 import { CreditCard, X } from "lucide-react";
 import React, { useState } from "react";
 
 export default function DashboardBanner() {
-      const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(false);
   return (
-    <div className={`${hidden ? "hidden" : "grid grid-cols-12  items-center py-6 px-16 bg-white gap-4 relative"}`}>
+    <div
+      className={`${
+        hidden
+          ? "hidden"
+          : "grid grid-cols-12  items-center py-3 px-16 bg-white gap-4 relative"
+      }`}
+    >
       {/* Icon */}
       <div className="col-span-2">
         <CreditCard className="w-16 h-16 text-slate-500" />
@@ -27,7 +33,10 @@ export default function DashboardBanner() {
         </button>
       </div>
       {/* Close Button */}
-      <button onClick={() => setHidden(true)} className="absolute top-4 right-16">
+      <button
+        onClick={() => setHidden(true)}
+        className="absolute top-4 right-16"
+      >
         <X />
       </button>
     </div>
