@@ -6,14 +6,17 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import CollapsibleLinks from "./CollapsibleLinks";
-import { BaggageClaim } from "lucide-react";
+import { BaggageClaim, ChevronRight } from "lucide-react";
 
 export default function SidebarDropDownLinks({title, items, icon:Icon}) {
   return (
     <Collapsible>
-      <CollapsibleTrigger className="p-1  flex items-center space-x-2">
-        <Icon className="w-4 h-4 items-center space-x-2" />
+      <CollapsibleTrigger className="flex justify-between items-center w-full">
+        <div className="p-1 flex items-center space-x-2">
+          <Icon className="w-4 h-4 items-center space-x-2" />
         <span>{title}</span>
+        </div>
+        <ChevronRight className="w-4 h-4 items-center space-x-2"/>
       </CollapsibleTrigger>
       <CollapsibleContent>
         {items.map((item, i) => {
