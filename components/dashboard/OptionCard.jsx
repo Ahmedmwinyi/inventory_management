@@ -20,7 +20,7 @@ export default function OptionCard({ optionData }) {
             href={link}
             className="py-2 bg-blue-600 rounded-lg px-3 inline-flex items-center space-x-2 text-white"
           >
-            <Plus className="w-4 h-4" />
+            
             {linkTitle}
           </Link>
         ) : (

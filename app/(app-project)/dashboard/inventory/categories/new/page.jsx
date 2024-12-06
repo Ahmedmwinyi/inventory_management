@@ -18,15 +18,33 @@ export default function NewCategories() {
 
   const [loading, setLoading] = useState(false);
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
+    setLoading(true);
     console.log(data);
-    reset();
+    const baseUrl = "http://localhost:3000"
+
+    try {
+      const response = await fetch(`${baseUrl}/api/categories`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      if (response.ok) {
+        console.log(response)
+        setLoading(false)
+        reset();  
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <div>
       {/* Header */}
-      <FormHeader title="New Category" href="#" />
+      <FormHeader title="New Category" href="/dashboard/inventory/" />
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -40,8 +58,11 @@ export default function NewCategories() {
             errors={errors}
           />
 
-          
-
+          <TextareaInput 
+            label="Category Description"
+            name="description"
+            register={register}
+            errors={errors}
           />
         </div>
         <SubmitButton isLoading={loading} title="Category" />
