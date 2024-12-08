@@ -1,17 +1,21 @@
 "use client";
 import FormHeader from "@/components/dashboard/FormHeader";
+import ImageInput from "@/components/FormInputs/ImageInput";
 import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
 import { UploadButton } from "@/lib/uploadthing";
-import { Plus, X } from "lucide-react";
+import { UploadDropzone } from "@uploadthing/react";
+import { Pencil, Plus, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Value } from "sass";
 
 export default function NewItem() {
+  const [imageUrl, setImageUrl] = useState("");
   const categories = [
     {
       label: "Electronic",
@@ -63,6 +67,7 @@ export default function NewItem() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
+    data.imageUrl = imageUrl;
     setLoading(true);
     console.log(data);
     const baseUrl = "http://localhost:3000";
@@ -236,20 +241,12 @@ export default function NewItem() {
             errors={errors}
           />
 
-          <div className="sm:col-span-2">
-            <UploadButton
-              endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
-                // Do something with the response
-                console.log("Files: ", res);
-                alert("Upload Completed");
-              }}
-              onUploadError={(error) => {
-                // Do something with the error.
-                alert(`ERROR! ${error.message}`);
-              }}
-            />
-          </div>
+          <ImageInput
+            label="Item Image"
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            endpoint="imageUploader"
+          />
         </div>
         <SubmitButton isLoading={loading} title="Item" />
       </form>
