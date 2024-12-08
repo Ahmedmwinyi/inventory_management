@@ -18,3 +18,30 @@ model Category {
   title String
   description String?
 }
+
+model Unit {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  abbreviation  String
+}
+
+model Brand {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+}
+
+model Warehouse {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  location      String?
+  description   String?
+  warehouseType String
+}
+
+// model AddStockAdjustment {
+//   id  String  @id @default(auto()) @map("_id") @db.ObjectId
+//   title          String
+//   location      String?
+//   description   String?
+//   warehouseType String
+// }
