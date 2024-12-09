@@ -4,11 +4,10 @@ import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
-import { Plus, X } from "lucide-react";
-import Link from "next/link";
+import { makePostRequest } from "@/lib/apiRequest";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Value } from "sass";
+import toast from "react-hot-toast";
 
 export default function NewWarehouse() {
   const selectOptions = [
@@ -31,26 +30,14 @@ export default function NewWarehouse() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    setLoading(true);
     console.log(data);
-    const baseUrl = "http://localhost:3000";
-
-    try {
-      const response = await fetch(`${baseUrl}/api/warehouse`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        console.log(response);
-        setLoading(false);
-        reset();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    makePostRequest(
+      setLoading,
+      "api/warehouse",
+      data,
+      "Warehouse",
+      reset
+    );
   }
 
   return (

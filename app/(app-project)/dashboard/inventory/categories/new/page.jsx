@@ -3,8 +3,7 @@ import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
-import { Plus, X } from "lucide-react";
-import Link from "next/link";
+import { makePostRequest } from "@/lib/apiRequest";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -22,25 +21,13 @@ export default function NewCategories() {
   async function onSubmit(data) {
     setLoading(true);
     console.log(data);
-    const baseUrl = "http://localhost:3000"
-
-    try {
-      const response = await fetch(`${baseUrl}/api/categories`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      if (response.ok) {
-        console.log(response)
-        setLoading(false)
-        toast.success('Category Created Successfully!')
-        reset();  
-      }
-    } catch (error) {
-      console.log(error)
-    }
+     makePostRequest(
+      setLoading,
+      "api/categories",
+      data,
+      "Category",
+      reset
+    );
   }
 
   return (

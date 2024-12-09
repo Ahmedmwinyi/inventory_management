@@ -1,34 +1,13 @@
 "use client";
-import SelectInput from "@/components/FormInputs/SelectInput";
+import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
 import { makePostRequest } from "@/lib/apiRequest";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
-export default function AddInventoryForm() {
-  const branches = [
-    {
-      label: "Branch A",
-      Value: "doj49069",
-    },
-    {
-      label: "Branch B",
-      Value: "gjkl489p8j",
-    },
-  ];
-  const items = [
-    {
-      label: "Item A",
-      Value: "doj49069",
-    },
-    {
-      label: "Item B",
-      Value: "gjkl489p8j",
-    },
-  ];
+export default function NewSupplier() {
   const {
     register,
     handleSubmit,
@@ -39,77 +18,91 @@ export default function AddInventoryForm() {
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(data) {
-    setLoading(true);
     console.log(data);
-     makePostRequest(
+    makePostRequest(
       setLoading,
-      "api/adjustments/add",
+      "api/supplier",
       data,
-      "Stock Adjustment",
+      "Supplier",
       reset
     );
   }
 
   return (
     <div>
+      {/* Header */}
+      <FormHeader title="New Supplier" href="/dashboard/inventory/" />
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto my-3"
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-
           <TextInputs
-            label="Reference Number"
-            name="referenceNumber"
+            label="Supplier Name"
+            name="name"
             register={register}
-            type="number"
             errors={errors}
-            className="w-full"
           />
-
-          <SelectInput
-            name="ItemId"
-            label="Select the Item"
-            register={register}
-            className="w-full"
-            options={items}
-          />
-
           <TextInputs
-            label="Enter Quantity of Stock to Add"
-            name="addStocksQty"
+            label="Supplier Phone Number"
+            name="phone"
             register={register}
-            type="number"
             errors={errors}
             className="w-full"
           />
-
-          {/* <TextInputs
-            label="Date"
-            name="date"
+          <TextInputs
+            label="Supplier Email"
+            name="email"
+            type="email"
             register={register}
-            type="date"
             errors={errors}
             className="w-full"
-          /> */}
-
-          <SelectInput
-            name="receivingWarehouseId"
-            label="Select the Warehouse that will receive the Stock"
-            register={register}
-            className="w-full"
-            options={branches}
           />
-
+          <TextInputs
+            label="Supplier Address"
+            name="address"
+            register={register}
+            errors={errors}
+            className="w-full"
+          />
+          <TextInputs
+            label="Supplier Contact Person"
+            name="contactPerson"
+            register={register}
+            errors={errors}
+            className="w-full"
+          />
+          <TextInputs
+            label="Supplier Code"
+            name="supplierCode"
+            register={register}
+            errors={errors}
+            className="w-full"
+          />
+          <TextInputs
+            label="Supplier TIN"
+            name="taxID"
+            register={register}
+            errors={errors}
+            className="w-full"
+          />
           <TextareaInput
-            label="Adjustments Notes"
+            label="Supplier Payments Terms"
+            name="paymentTerms"
+            register={register}
+            errors={errors}
+            className="w-full"
+          />
+          <TextareaInput
+            label="Notes"
             name="notes"
             register={register}
             errors={errors}
+            className="w-full"
           />
         </div>
-        <SubmitButton isLoading={loading} title="Adjustment" />
+        <SubmitButton isLoading={loading} title="Supplier" />
       </form>
     </div>
   );
