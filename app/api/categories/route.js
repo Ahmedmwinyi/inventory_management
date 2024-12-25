@@ -25,3 +25,21 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET(request){
+   try {
+      const category = await db.category.findMany({
+         orderBy: {
+            createdAt: "desc",
+         }
+      })
+      return NextResponse.json(category);
+   } catch (error) {
+      return NextResponse.json({
+        error,
+        message: "Failed to fetch the Warehouse"
+      },{
+         status: 500,
+      })
+   }
+}

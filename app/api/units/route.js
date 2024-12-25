@@ -22,3 +22,21 @@ export async function POST(request){
       })
    }
 }
+
+export async function GET(request){
+   try {
+      const unit = await db.unit.findMany({
+         orderBy: {
+            createdAt: "desc",
+         }
+      })
+      return NextResponse.json(unit);
+   } catch (error) {
+      return NextResponse.json({
+        error,
+        message: "Failed to fetch the unit"
+      },{
+         status: 500,
+      })
+   }
+}

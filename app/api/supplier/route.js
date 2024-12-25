@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const {
-      name,
+      title,
       phone,
       email,
       address,
@@ -17,7 +17,7 @@ export async function POST(request) {
 
     const supplier = await db.supplier.create({
       data: {
-        name,
+        title,
         phone,
         email,
         address,
@@ -41,4 +41,22 @@ export async function POST(request) {
       }
     );
   }
+}
+
+export async function GET(request){
+   try {
+      const supplier = await db.supplier.findMany({
+         orderBy: {
+            createdAt: "desc",
+         }
+      })
+      return NextResponse.json(supplier);
+   } catch (error) {
+      return NextResponse.json({
+        error,
+        message: "Failed to fetch the Warehouse"
+      },{
+         status: 500,
+      })
+   }
 }

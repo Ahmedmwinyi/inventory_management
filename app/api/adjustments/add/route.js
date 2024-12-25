@@ -3,15 +3,23 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { addStocksQty, receivingWarehouseId, referenceNumber, ItemId, notes } =
-      await request.json();
+    const {
+      transferStocksQty,
+      itemId,
+      referenceNumber,
+      addStockQty,
+      receivingWarehouseId,
+      notes,
+    } = await request.json();
 
     const adjustments = await db.addStockAdjustment.create({
       data: {
-        addStocksQty,
+        transferStocksQty : parseInt(transferStocksQty),
         referenceNumber,
+        givingWarehouseId,
         receivingWarehouseId,
-        ItemId,
+        itemId,
+        addStockQty,
         notes,
       },
     });
@@ -21,7 +29,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         error,
-        message: "Failed to Add a Adjustments",
+        message: "Failed to Add Adjustments",
       },
       {
         status: 500,

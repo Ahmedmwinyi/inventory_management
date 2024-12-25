@@ -24,3 +24,21 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET(request){
+   try {
+      const brand = await db.brand.findMany({
+         orderBy: {
+            createdAt: "desc",
+         }
+      })
+      return NextResponse.json(brand);
+   } catch (error) {
+      return NextResponse.json({
+        error,
+        message: "Failed to fetch the Brands"
+      },{
+         status: 500,
+      })
+   }
+}

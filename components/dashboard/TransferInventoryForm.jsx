@@ -8,32 +8,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function TransferInventoryForm() {
-  const branches = [
-    {
-      label: "Branch A",
-      Value: "doj49069",
-    },
-    {
-      label: "Branch B",
-      Value: "gjkl489p8j",
-    },
-  ];
-
-  const items = [
-    {
-      label: "Item C",
-      Value: "doj49069",
-    },
-    {
-      label: "Item B",
-      Value: "gjkl489p8j",
-    },
-    {
-      label: "Item A",
-      Value: "fksi59",
-    },
-  ];
+export default function TransferInventoryForm({items, warehouses}) {
   const {
     register,
     handleSubmit,
@@ -46,7 +21,7 @@ export default function TransferInventoryForm() {
   async function onSubmit(data) {
     setLoading(true);
     console.log(data);
-    makePostRequest(
+     makePostRequest(
       setLoading,
       "api/adjustments/transfer",
       data,
@@ -68,7 +43,6 @@ export default function TransferInventoryForm() {
             label="Reference Number"
             name="referenceNumber"
             register={register}
-            type="number"
             errors={errors}
           />
 
@@ -94,7 +68,7 @@ export default function TransferInventoryForm() {
             label="Select the Warehouse that will send the Stock"
             register={register}
             className="w-full"
-            options={branches}
+            options={warehouses}
           />
 
           <SelectInput
@@ -102,7 +76,7 @@ export default function TransferInventoryForm() {
             label="Select the Warehouse that will receive the Stock"
             register={register}
             className="w-full"
-            options={branches}
+            options={warehouses}
           />
 
           <TextareaInput

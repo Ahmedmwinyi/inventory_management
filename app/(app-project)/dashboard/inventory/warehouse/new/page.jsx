@@ -12,11 +12,11 @@ import toast from "react-hot-toast";
 export default function NewWarehouse() {
   const selectOptions = [
     {
-      label: "Main",
+      title: "Main",
       Value: "main",
     },
     {
-      label: "Branch",
+      title: "Branch",
       Value: "branch",
     },
   ];

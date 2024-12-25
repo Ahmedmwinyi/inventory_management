@@ -40,7 +40,7 @@ export default function NewSupplier() {
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <TextInputs
             label="Supplier Name"
-            name="name"
+            name="title"
             register={register}
             errors={errors}
           />

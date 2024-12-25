@@ -8,27 +8,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export default function AddInventoryForm() {
-  const branches = [
-    {
-      label: "Branch A",
-      Value: "doj49069",
-    },
-    {
-      label: "Branch B",
-      Value: "gjkl489p8j",
-    },
-  ];
-  const items = [
-    {
-      label: "Item A",
-      Value: "doj49069",
-    },
-    {
-      label: "Item B",
-      Value: "gjkl489p8j",
-    },
-  ];
+export default function AddInventoryForm({items, warehouses}) {
+
   const {
     register,
     handleSubmit,
@@ -63,13 +44,12 @@ export default function AddInventoryForm() {
             label="Reference Number"
             name="referenceNumber"
             register={register}
-            type="number"
             errors={errors}
             className="w-full"
           />
 
           <SelectInput
-            name="ItemId"
+            name="itemId"
             label="Select the Item"
             register={register}
             className="w-full"
@@ -78,7 +58,7 @@ export default function AddInventoryForm() {
 
           <TextInputs
             label="Enter Quantity of Stock to Add"
-            name="addStocksQty"
+            name="addStockQty"
             register={register}
             type="number"
             errors={errors}
@@ -99,7 +79,7 @@ export default function AddInventoryForm() {
             label="Select the Warehouse that will receive the Stock"
             register={register}
             className="w-full"
-            options={branches}
+            options={warehouses}
           />
 
           <TextareaInput
