@@ -2,10 +2,10 @@ import { HelpCircle, LayoutGrid, List, MoreHorizontal, MoreVertical, Plus } from
 import Link from "next/link";
 import React from "react";
 
-export default function FixedHeader({newLink}) {
+export default function FixedHeader({newLink, title}) {
   return (
     <div className="flex justify-between items-center bg-white py-5 px-4">
-      <button className="text-2xl">All Items</button>
+      <button className="text-2xl">{title}</button>
       <div className="flex gap-4">
         {/* New */}
         <Link

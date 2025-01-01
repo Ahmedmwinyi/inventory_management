@@ -2,37 +2,51 @@
 import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextInputs from "@/components/FormInputs/TextInputs";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function NewBrands() {
+export default function NewBrands({ initialData = {}, isUpdate = false }) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: initialData });
 
   const [loading, setLoading] = useState(false);
+  function redirect() {
+    router.replace("/dashboard/inventory/brands");
+  }
 
   async function onSubmit(data) {
     setLoading(true);
-    console.log(data);
-     makePostRequest(
-      setLoading,
-      "api/brands",
-      data,
-      "Brand",
-      reset
-    );
-  }
 
+    console.log(data);
+    if (isUpdate) {
+      // Update request
+      makePutRequest(
+        setLoading,
+        `api/brands/${initialData.id}`,
+        data,
+        "Brand",
+        redirect,
+        reset
+      );
+    } else {
+      makePostRequest(setLoading, "api/brands", data, "Brand", reset);
+    }
+  }
 
   return (
     <div>
       {/* Header */}
-      <FormHeader title="New Brands" href="/dashboard/inventory/" />
+      <FormHeader
+        title={isUpdate ? "Update Brand" : "New Brands"}
+        href="/dashboard/inventory/brands"
+      />
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -45,9 +59,12 @@ export default function NewBrands() {
             register={register}
             errors={errors}
             className="w-full"
-          />          
+          />
         </div>
-        <SubmitButton isLoading={loading} title="Brand" />
+        <SubmitButton
+          isLoading={loading}
+          title={isUpdate ? "Updated Brand" : "New Brands"}
+        />
       </form>
     </div>
   );

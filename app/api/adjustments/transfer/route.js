@@ -36,3 +36,21 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET(request){
+   try {
+      const adjustments = await db.transferStockAdjustment.findMany({
+         orderBy: {
+            createdAt: "desc",
+         }
+      })
+      return NextResponse.json(adjustments);
+   } catch (error) {
+      return NextResponse.json({
+        error,
+        message: "Failed to fetch the stock adjustment"
+      },{
+         status: 500,
+      })
+   }
+}

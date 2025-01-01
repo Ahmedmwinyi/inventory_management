@@ -1,14 +1,31 @@
-import { Bell, ChevronDown, History, LayoutGrid, Plus, Settings, Users } from "lucide-react";
-import React from "react";
+
+import {
+  AlignJustify,
+  Bell,
+  ChevronDown,
+  History,
+  LayoutGrid,
+  Plus,
+  Settings,
+  Users,
+} from "lucide-react";
 import SearchInput from "./SearchInput";
 import Image from "next/image";
 
-export default function Header() {
+export default function Header({setShowSidebar}) {
+  function handleClick() {
+    console.log("Button clicked");
+    
+  }
+  
   return (
     <div className="bg-gray-100 h-12 flex items-center justify-between px-8 border-b border-slate-200 ">
+      <button className="lg:hidden" onClick={() => setShowSidebar(true)}>
+          <AlignJustify className="w-6 h-6" />
+        </button>
       <div className="flex gap-3">
         {/* Recently Activities */}
-        <button>
+        <button className="hidden lg:block">
           <History className="w-6 h-6" />
         </button>
 
@@ -16,7 +33,7 @@ export default function Header() {
         <SearchInput />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="items-center gap-3 hidden lg:flex">
         {/* Plus Icon  */}
         <div className="pr-2 border-r border-gray-300">
           <button className="p-1 bg-blue-600 rounded-lg">
@@ -45,7 +62,7 @@ export default function Header() {
 
           <button>
             <Image
-              src="/hero-image.jpg" 
+              src="/hero-image.jpg"
               alt="user image"
               width={96}
               height={96}
@@ -54,11 +71,21 @@ export default function Header() {
           </button>
 
           <button>
-            <LayoutGrid className="w-6 h-6 text-slate-900"/>
+            <LayoutGrid className="w-6 h-6 text-slate-900" />
           </button>
         </div>
         {/*   */}
       </div>
+
+      <button className="lg:hidden">
+        <Image
+          src="/hero-image.jpg"
+          alt="user image"
+          width={96}
+          height={96}
+          className="w-8 h-8 rounded-full border border-slate-800"
+        />
+      </button>
     </div>
   );
 }
