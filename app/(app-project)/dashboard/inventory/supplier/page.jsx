@@ -20,7 +20,7 @@ export default async function Supplier() {
 
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={data} columns={columns} />
+        <DataTable data={supplier} columns={columns} resourceTitle="supplier" />
       </div>
       
     </div>

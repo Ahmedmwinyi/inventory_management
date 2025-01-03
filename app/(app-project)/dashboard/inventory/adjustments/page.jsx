@@ -19,12 +19,12 @@ export default async function Adjustments({columns}) {
       {/* Table */}
       <div className="my-4 p-8">
         <h2 className='py-4 text-xl font-semibold'>Stock Increment Adjustment</h2>
-        <DataTable data={addAdjuments} columns={addColumns} />
+        <DataTable data={addAdjuments} columns={addColumns} resourceTitle="adjustments/add" />
       </div>
 
       <div className="my-4 p-8">
         <h2 className='py-4 text-xl font-semibold'>Stock Transfer Adjustment</h2>
-        <DataTable data={transferAdjuments} columns={transferColumns} />
+        <DataTable data={transferAdjuments} columns={transferColumns} resourceTitle="adjustments/transfer" />
       </div>
       
     </div>

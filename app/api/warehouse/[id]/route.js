@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request, {params:{id}}){
+export async function GET(request, {params:{ id }}){
    try {
       const warehouse = await db.warehouse.findUnique({
          where: {
@@ -21,21 +21,21 @@ export async function GET(request, {params:{id}}){
 
 export async function PUT(request, {params:{id}}){
    try {
-      const {title} = await request.json();
-      const brand = await db.brand.update({
+      const {title, location, description, warehouseType} = await request.json();
+      const warehouse = await db.warehouse.update({
          where: {
           id
          },
          data: {
-          title 
+          title, location, description, warehouseType 
          }
       })
-      console.log(brand)
-      return NextResponse.json(brand);
+      console.log(warehouse)
+      return NextResponse.json(warehouse);
    } catch (error) {
       return NextResponse.json({
         error,
-        message: "Failed to Update the Brand"
+        message: "Failed to Update the Warehouse"
       },{
          status: 500,
       })

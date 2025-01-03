@@ -70,6 +70,7 @@ model Warehouse {
   location      String?
   description   String?
   warehouseType String
+  stockQty      Int @default(0)
   items          Item[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

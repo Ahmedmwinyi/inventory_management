@@ -19,7 +19,7 @@ export default async function Categories() {
 
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={data} columns={columns} />
+        <DataTable data={categories} columns={columns} resourceTitle="categories" />
       </div>
       
     </div>

@@ -9,7 +9,7 @@ export default function DashboardBanner() {
       className={`${
         hidden
           ? "hidden"
-          : "grid grid-cols-12  items-center py-3 px-16 bg-white gap-4 relative"
+          : "hidden grid-cols-12  items-center py-3 px-16 bg-white gap-4 relative"
       }`}
     >
       {/* Icon */}

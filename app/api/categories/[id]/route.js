@@ -5,8 +5,8 @@ export async function GET(request, {params:{id}}){
    try {
       const category = await db.category.findUnique({
          where: {
-            id
-         }
+            id,
+         },
       })
       return NextResponse.json(category);
    } catch (error) {

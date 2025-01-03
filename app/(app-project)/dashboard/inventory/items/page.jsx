@@ -6,7 +6,7 @@ import React from 'react'
 export default async function Items() {
   const items = await getData('items');
 
-  const columns = ["title", "sellingPrice",];
+  const columns = ["imageUrl", "title", "quantity", "category.title", "warehouse.title",];
   return (
     <div>
       {/* Header */}
@@ -14,7 +14,7 @@ export default async function Items() {
 
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={items} columns={columns} />
+        <DataTable data={items} columns={columns} resourceTitle="items" />
       </div>
       
     </div>

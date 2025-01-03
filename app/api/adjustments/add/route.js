@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const {
-      transferStocksQty,
       itemId,
       referenceNumber,
       addStockQty,
@@ -12,17 +11,41 @@ export async function POST(request) {
       notes,
     } = await request.json();
 
-    const adjustments = await db.addStockAdjustment.create({
+
+    //Get the Item
+    const itemToUpdate = await db.item.findUnique({
+      where: {
+        id: itemId,
+      }
+    })
+
+    //Current Item Quantity
+    const currentItemQty = itemToUpdate.quantity;
+    const newQty = parseInt(currentItemQty) + parseInt(addStockQty);
+
+    // Modify the Item
+    const updatedItem = await db.item.update({
+      where: {
+        id : itemId,
+      },
       data: {
-        transferStocksQty : parseInt(transferStocksQty),
-        referenceNumber,
-        givingWarehouseId,
-        receivingWarehouseId,
-        itemId,
-        addStockQty,
-        notes,
+        quantity: newQty,
       },
     });
+    console.log(updatedItem);
+
+    // const adjustments = await db.addStockAdjustment.create({
+    //   data: {
+    //     transferStocksQty: parseInt(transferStocksQty),
+    //     referenceNumber,
+    //     receivingWarehouseId,
+    //     itemId,
+    //     addStockQty,
+    //     notes,
+    //   },
+    // });
+
+    //Affect Warehouse
     console.log(adjustments);
     return NextResponse.json(adjustments);
   } catch (error) {
@@ -38,20 +61,47 @@ export async function POST(request) {
   }
 }
 
-export async function GET(request){
-   try {
-      const adjustments = await db.addStockAdjustment.findMany({
-         orderBy: {
-            createdAt: "desc",
-         }
-      })
-      return NextResponse.json(adjustments);
-   } catch (error) {
-      return NextResponse.json({
+export async function GET(request) {
+  try {
+    const adjustments = await db.addStockAdjustment.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return NextResponse.json(adjustments);
+  } catch (error) {
+    return NextResponse.json(
+      {
         error,
         message: "Failed to fetch the stock adjustment",
-      },{
-         status: 500,
-      })
-   }
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function DELETE(request, { searchParams }) {
+  try {
+    const id = request.nextUrl.searchParams.get("id");
+    const deletedAdjustment = await db.addStockAdjustment.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json(deletedAdjustment);
+  } catch (error) {
+    console.log(error);
+
+    return NextResponse.json(
+      {
+        error,
+        message: "Failed to delete the Adjustment",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }

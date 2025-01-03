@@ -45,7 +45,8 @@ export async function GET(request){
             createdAt: "desc",
          },
          include: {
-            category: true
+            category: true,
+            warehouse: true
          }
       })
       return NextResponse.json(item);
@@ -53,6 +54,27 @@ export async function GET(request){
       return NextResponse.json({
         error,
         message: "Failed to fetch the Items"
+      },{
+         status: 500,
+      })
+   }
+}
+
+export async function DELETE(request, { searchParams}){
+   try {
+      const id = request.nextUrl.searchParams.get ("id");
+      const deletedItem = await db.item.delete({
+        where:{
+          id
+        }
+      })
+      return NextResponse.json (deletedItem);
+   } catch (error) {
+      console.log(error)
+
+      return NextResponse.json({
+        error,
+        message: "Failed to delete the Item",
       },{
          status: 500,
       })

@@ -5,7 +5,8 @@ import SelectInput from "@/components/FormInputs/SelectInput";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -15,34 +16,40 @@ export default function CreateItemForm({
   brands,
   warehouse,
   supplier,
+  initialData = {},
+  isUpdate = false,
 }) {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(initialData.imageUrl || "");
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: initialData });
 
   const [loading, setLoading] = useState(false);
-
-  // async function onSubmit(data) {
-  //   data.imageUrl = imageUrl;
-  //   console.log(data);
-  //   makePostRequest(setLoading, "api/items", data, "Item", reset);
-  // }
+  function redirect() {
+    router.replace("/dashboard/inventory/items");
+  }
 
   async function onSubmit(data) {
     setLoading(true);
     console.log(data);
-     makePostRequest(
-      setLoading,
-      "api/items",
-      data,
-      "Items",
-      reset
-    );
+    console.log(data.imageUrl);
+    if (isUpdate) {
+      makePutRequest(
+        setLoading,
+        `api/items/${initialData.id}`,
+        data,
+        "Items",
+        redirect,
+        reset
+      );
+    } else {
+      makePostRequest(setLoading, "api/items", data, "Items", reset);
+    }
   }
 
   return (
@@ -200,7 +207,10 @@ export default function CreateItemForm({
             endpoint="imageUploader"
           />
         </div>
-        <SubmitButton isLoading={loading} title="Item" />
+        <SubmitButton
+          isLoading={loading}
+          title={isUpdate ? "Updated Item" : "New Item"}
+        />
       </form>
     </div>
   );

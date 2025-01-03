@@ -3,35 +3,51 @@ import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/FormInputs/SubmitButton";
 import TextareaInput from "@/components/FormInputs/TextareaInput";
 import TextInputs from "@/components/FormInputs/TextInputs";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function NewSupplier() {
+export default function NewSupplier({ initialData = {}, isUpdate = false }) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: initialData });
 
   const [loading, setLoading] = useState(false);
+  function redirect() {
+    router.replace("/dashboard/inventory/supplier");
+  }
 
   async function onSubmit(data) {
     console.log(data);
-    makePostRequest(
+    if (isUpdate) {
+      makePutRequest(
+        setLoading,
+        `api/supplier/${initialData.id}`,
+        data,
+        "Supplier",
+        redirect,
+        reset
+      );
+    } else {
+     makePostRequest(
       setLoading,
       "api/supplier",
       data,
       "Supplier",
       reset
-    );
+    ); 
+    }
   }
 
   return (
     <div>
       {/* Header */}
-      <FormHeader title="New Supplier" href="/dashboard/inventory/supplier" />
+      <FormHeader title={isUpdate ? "Update Supplier" : "New Supplier"} href="/dashboard/inventory/supplier" />
       {/* Form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -102,7 +118,7 @@ export default function NewSupplier() {
             className="w-full"
           />
         </div>
-        <SubmitButton isLoading={loading} title="Supplier" />
+        <SubmitButton isLoading={loading} title={isUpdate ? "Updated Supplier" : "New Supplier"} />
       </form>
     </div>
   );
